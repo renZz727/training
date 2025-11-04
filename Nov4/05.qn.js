@@ -11,3 +11,4 @@ function sortArray(numbers) {
   return numbers;
 }
 console.log(sortArray([4, 5, 8, 3, 1, 2]));
+console.log(sortArray([23, 4, 54, 7, 1002, 34, 511, 53]));

@@ -12,3 +12,4 @@ function functionCompositionFn(functions, num) {
 console.log(
   functionCompositionFn([(x) => x + 1, (x) => x * x, (x) => 2 * x], 4)
 );
+console.log(functionCompositionFn([(x) => 2 * x, (x) => 10, (x) => x - 1], 3))

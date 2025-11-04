@@ -6,7 +6,14 @@ function createCounterFn(n) {
   }
   return counter;
 }
-let count = createCounterFn(3);
-count();
-count();
-count();
+
+const counter1 = createCounterFn(3);
+counter1();
+counter1();
+counter1();
+
+const counter2 = createCounterFn(10);
+counter2();
+counter2();
+
+counter1();
