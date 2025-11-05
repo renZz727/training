@@ -1,92 +1,69 @@
 const form = document.getElementById("form");
-const name = document.getElementById("name");
-const age = document.getElementById("age");
-const address = document.getElementById("address");
 const nameToolTip = document.querySelector(".age");
 const ageToolTip = document.querySelector(".address");
 const addressToolTip = document.querySelector(".name");
-const gender = document.getElementById("gender");
-const isPass = document.querySelectorAll(".isPass");
-const favSub = document.querySelectorAll(".favSub");
 const result = document.querySelector(".result");
 const validate = document.getElementById("validate");
 const clearBtn = document.getElementById("clear");
 const submitBtn = document.getElementById("submit");
 
-// form.addEventListener("click", () => {
-//   if (
-//     name.value !== "undefined" ||
-//     age.value !== "undefined" ||
-//     address.value !== "undefined" ||
-//     gender.value !== "undefined" ||
-//     isPass[0].value !== "undefined" ||
-//     isPass[1].value !== "undefined" ||
-//     favSub[0].value !== false ||
-//     favSub[1].value !== false ||
-//     favSub[2].value !== false ||
-//     favSub[3].value !== false
-//   )
-//     clearBtn.style.display = "block";
-// });
-form.addEventListener('input', () => {
+let savedData = JSON.parse(localStorage.getItem("studentForm")) || [];
+
+window.addEventListener("load", () => {
+  clearBtn.disabled = Object.keys(savedData).length === 0;
+
+  if (savedData.name) document.getElementById("name").value = savedData.name;
+  if (savedData.age) document.getElementById("age").value = savedData.age;
+  if (savedData.address)
+    document.getElementById("address").value = savedData.address;
+  if (savedData.gender)
+    document.getElementById("gender").value = savedData.gender;
+
+  if (savedData.isPass) {
+    const isPass = document.querySelector(
+      `input[name="exam"][value="${savedData.isPass}"]`
+    );
+    if (isPass) isPass.checked = true;
+  }
+
+  if (savedData.favSub) {
+    let favSub = savedData.favSub;
+    console.log(favSub);
+    favSub.map((sub) => {
+      let subject = document.querySelector(
+        `input[name="fav-sub"][value="${sub}"]`
+      );
+      subject.checked = true;
+    });
+  }
+});
+
+form.addEventListener("input", () => {
   clearBtn.disabled = false;
 });
-clearBtn.addEventListener('click', ()=> {
+
+clearBtn.addEventListener("click", () => {
   form.reset();
   clearBtn.disabled = true;
-})
+});
 
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("name").value;
+  const age = document.getElementById("age").value;
+  const address = document.getElementById("address").value;
+  const gender = document.getElementById("gender").value;
+  const isPass =
+    document.querySelector('input[name="exam"]:checked')?.value || "";
+  const favSub = [
+    ...document.querySelectorAll('input[name="fav-sub"]:checked'),
+  ].map((sub) => sub.value);
 
-// const localData = localStorage.setItem("name" : name.value);
-// console.log(localData);
+  const student = { name, age, address, gender, isPass, favSub };
 
-validate.addEventListener("click", () => {
-  if (name.value.length > 4) {
-    nameToolTip.style.visibility = "visible";
-    nameResult = "Name must be within 24 characters";
-  } else {
-    nameResult = `Name verified: ${name.value}`;
-  }
-  if (age.value > 30 || typeof address.value === "number") {
-    // ageToolTip.classList.add('name:hover')
-    ageResult = "Age must be within 30 & must be number";
-  } else ageResult = `Age verified: ${age.value}`;
-
-  if (address.value.length > 300)
-    addressResult = `Address must be within 300 characters`;
-  else addressResult = `Address: ${address.value}`;
-
-  genderResult = `Gender: ${gender.value}`;
-
-  if (isPass[0].checked === true) isPassResult = `isPassed: Yes`;
-  else isPassResult = `isPassed: No`;
-
-  favSubjects = "";
-  if (favSub[0].checked === true) favSubjects += "Maths ";
-  if (favSub[1].checked === true) favSubjects += "English ";
-  if (favSub[2].checked === true) favSubjects += "Science ";
-  if (favSub[3].checked === true) favSubjects += "Malayalam ";
-
-  console.log(
-    nameResult +
-      "\n" +
-      ageResult +
-      "\n" +
-      addressResult +
-      "\n" +
-      genderResult +
-      "\n" +
-      isPassResult +
-      "\n" +
-      favSubjects
-  );
-  result.innerHTML = `
-  <ul>
-   <li>${nameResult}</li>
-   <li>${ageResult}</li>
-   <li>${addressResult}</li>
-   <li>${genderResult}</li>
-   <li>${isPassResult}</li>
-   <li>${favSubjects}</li>
-  <ul>`;
+  savedData.push(student);
+  localStorage.setItem("studentForm", JSON.stringify(savedData));
+  console.log(student);
+  console.log(savedData);
+  console.log(Array.isArray(savedData));
 });
