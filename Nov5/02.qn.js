@@ -1,4 +1,81 @@
+const testCases = [
+  {
+    expected: ["This   is   an", "example     of", "text          "],
+    input: ["This", "is", "an", "example", "of", "text", "justification."],
+    maxLength: 14,
+  },
+  {
+    expected: [
+      "What    must    be",
+      "acknowledgment    ",
+      "shall be          ",
+    ],
+    input: ["What", "must", "be", "acknowledgment", "shall", "be"],
+    maxLength: 18,
+  },
+  {
+    expected: ["This    is    an", "example  of  text", "justification.  "],
+    input: ["This", "is", "an", "example", "of", "text", "justification."],
+    maxLength: 16,
+  },
+  {
+    expected: ["What       must       be", "acknowledgment shall be "],
+    input: ["What", "must", "be", "acknowledgment", "shall", "be"],
+    maxLength: 24,
+  },
+  {
+    expected: ["Life      is", "beautiful   "],
+    input: ["Life", "is", "beautiful"],
+    maxLength: 12,
+  },
+  { expected: ["Save   ", "Energy "], input: ["Save", "Energy"], maxLength: 7 },
+  { expected: false, input: [0], maxLength: 10 },
+  { expected: false, input: [2, 4, 6, 8] },
+  { expected: false, input: ["2", 4, "6", 8] },
+  { expected: false, input: [] },
+  { expected: false, input: ["10, 23"] },
+  { expected: ["10        "], input: ["10"], maxLength: 10 },
+  { expected: false, input: {} },
+  { expected: false, input: { num1: 10, num2: 20 } },
+  { expected: false, input: { "num1, num2, num3": "2, 5, 7" } },
+  { expected: false, input: "1, 3, 5, 7" },
+  { expected: false, input: true },
+  { expected: false, input: false },
+];
+test(testCases);
+function test(testCases) {
+  testCases.forEach((testCase, index) => {
+    const result = textJustification(testCase.input, testCase.maxLength);
+    let flag = true;
+
+    if (typeof result === "boolean") {
+      if (result === testCase.expected) {
+        console.log(`Testcase ${index + 1} passed`);
+      } else console.log(`Testcase ${index + 1} failed`);
+    } else {
+      if (result.length !== testCase.expected.length) flag = false;
+      else {
+        for (let i = 0; i < result.length; i++) {
+          if (testCase.expected[i] !== result[i]) flag = false;
+        }
+      }
+      if (flag === true) console.log(`Testcase ${index + 1} passed`);
+      else console.log(`Testcase ${index + 1} failed`);
+    }
+  });
+}
+
 function textJustification(words, maxWidth) {
+  if (
+    !Array.isArray(words) ||
+    words === null ||
+    maxWidth === null ||
+    typeof maxWidth !== "number"
+  )
+    return false;
+  for (let i = 0; i < words.length; i++) {
+    if (typeof words[i] !== "string") return false;
+  }
   const result = [];
   const newArray = [];
   let k = 0;
@@ -76,12 +153,12 @@ function textJustification(words, maxWidth) {
   return resulting;
 }
 
-console.log(
-  textJustification(
-    ["This", "is", "an", "example", "of", "text", "justification."],
-    16
-  )
-);
-console.log(
-  textJustification(["What", "must", "be", "acknowledgment", "shall", "be"], 16)
-);
+// console.log(
+//   textJustification(
+//     ["This", "is", "an", "example", "of", "text", "justification."],
+//     16
+//   )
+// );
+// console.log(
+//   textJustification(["What", "must", "be", "acknowledgment", "shall", "be"], 16)
+// );
