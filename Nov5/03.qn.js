@@ -20,4 +20,5 @@ function reverseVowels(string) {
 console.log(reverseVowels("IceCreAm"));
 console.log(reverseVowels("eLepHAnt"));
 console.log(reverseVowels("DreAm CrEAm"));
+console.log(reverseVowels("watEr MeLOn"));
 

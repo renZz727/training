@@ -14,5 +14,6 @@ function nonRepeatingChar(str) {
   return -1;
 }
 console.log(nonRepeatingChar("roses are red"));
+console.log(nonRepeatingChar("roses are redo"));
 console.log(nonRepeatingChar("Everyday is a new beginning"));
 console.log(nonRepeatingChar("aabbccdd"));
