@@ -1,14 +1,19 @@
 function textJustification(words, maxWidth) {
   const result = [];
-  let word = "";
-  for (let i = 0; i < words.length; i++) {
-    word = "";
-    for (let j = i; j < words.length; j++) {
-      if (words[j].length <= maxWidth) {
-        word += words[j] + " ";
+  let k = 0;
+  for (let j = 0; j < words.length; j++) {
+    let wordsLength = 0;
+    let line = "";
+    for (let i = k; i < words.length; i++) {
+        console.log(i);
+      wordsLength += words[i].length;
+      if (wordsLength <= maxWidth) {
+        line += words[i] + " ";
       }
-    }
-    result.push(word);
+      
+      j = i;
+      k = i;
+    }result.push(line.trim());
   }
   console.log(result);
 }
