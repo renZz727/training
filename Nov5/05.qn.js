@@ -30,9 +30,8 @@ function test(testCases) {
   });
 }
 
-
 function nonRepeatingChar(str) {
-  if(typeof str !== "string" || str === null) return false;
+  if (typeof str !== "string" || str === null) return false;
   str = str.toLowerCase().replaceAll(" ", "");
   let freq = {};
   for (let i = 0; i < str.length; i++) {
