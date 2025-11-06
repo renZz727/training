@@ -4,6 +4,10 @@ const testCases = [
     input: [1, 2, 3],
   },
   {
+    expected: ["-", 2, 2],
+    input: [-2, 3],
+  },
+  {
     expected: [1, 0],
     input: [9],
   },
@@ -63,7 +67,10 @@ function interpretsNumber(arr) {
   let nums = result
     .toString()
     .split("")
-    .map((num) => Number(num));
+    .map((num) => {
+      if (isNaN(Number(num))) return num;
+      else return Number(num);
+    });
   return nums;
 }
 // console.log(interpretsNumber([1, 2, 3]));
