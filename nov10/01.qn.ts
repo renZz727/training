@@ -1,9 +1,9 @@
-type test = {
+type TestCase = {
   expected: number[][] | string;
-  input: number[] | string | {} | undefined | null;
+  input: number[] | string | object | undefined | null | boolean;
   fn: (num: number) => boolean;
 };
-const testCases : test[] = [
+const testCases: TestCase[] = [
   {
     expected: [
       [2, 4],
@@ -78,15 +78,17 @@ const testCases : test[] = [
 ];
 
 test(testCases);
-function test(testCases :test[]) : void{
-  testCases.forEach((testCase:test, index: number) => {
-    const result = Partition(testCase.input, testCase.fn);
+
+function test(testCases: TestCase[]): void {
+  testCases.forEach((testCase: TestCase, index: number) => {
+    const result = partition(testCase.input, testCase.fn);
     let flag = true;
 
-    if (typeof result === "boolean") {
+    if (typeof result === "string") {
       if (result === testCase.expected) {
         console.log(`Testcase ${index + 1} passed`);
       } else console.log(`Testcase ${index + 1} failed`);
+      return;
     } else {
       if (Array.isArray(result) && Array.isArray(testCase.expected)) {
         for (let i = 0; i < testCase.expected.length; i++) {
@@ -103,10 +105,17 @@ function test(testCases :test[]) : void{
   });
 }
 
-function Partition(arr: number[], fn: (num: number) => boolean): number[][] {
+function partition(
+  arr: number[] | string | object | boolean | null | undefined,
+  fn: (num: number) => boolean
+): number[][] | string {
+  if (!Array.isArray(arr)) return "input is not an array";
+
+  const numberArr = arr as number[];
+
   const pass1: number[] = [];
   const pass2: number[] = [];
-  arr.map((item) => {
+  numberArr.forEach((item) => {
     if (fn(item)) pass1.push(item);
     else pass2.push(item);
   });
