@@ -35,7 +35,7 @@ export default function sortCandidatesByScoreAndExperience(
   const sortKeys: Keys[] = [
     { key: "score", order: "desc" },
     { key: "experience", order: "desc" },
-    { key: "sumittedDaysAgo", order: "desc" },
+    { key: "submittedDaysAgo", order: "desc" },
     { key: "name", order: "asc" },
   ];
 

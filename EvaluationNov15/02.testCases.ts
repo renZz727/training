@@ -1,5 +1,8 @@
 import { groupAnagram } from "./02.qn.js";
-
+interface TestCase {
+  expected: string[][];
+  input: string[];
+}
 const testCases : TestCase[] = [
   {
     expected: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]],

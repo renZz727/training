@@ -1,16 +1,17 @@
 export function getValueByPath(
-  obj: object,
+  obj: Record<string, unknown>,
   path: string,
   parentKey: string = "",
-  result: {} = {}
+  result: Record<string, string> = {}
 ): string | number {
   if (typeof obj !== "object") return obj;
 
   for (const key in obj) {
     const newKey = parentKey ? `${parentKey}.${key}` : key;
-    if (typeof obj[key] === "object")
-      getValueByPath(obj[key], path, newKey, result);
-    else result[newKey] = obj[key];
+    let value = obj[key];
+    if (typeof value === "object")
+      getValueByPath(value as Record<string, unknown>, path, newKey, result);
+    else result[newKey] = value;
   }
   if (!result[path]) return "invalid path";
   return result[path];
