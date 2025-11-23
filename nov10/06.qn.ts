@@ -23,7 +23,7 @@ const testCases: test[] = [
 test(testCases);
 function test(testCases): void {
   testCases.forEach((testCase: test, index: number) => {
-    const result = findPrimes(testCase.input, testCase.target);
+    const result = findPrimes(testCase.input, testCase.input);
 
     console.log(testCase.expected, " ", result);
     if (testCase.expected === result)
